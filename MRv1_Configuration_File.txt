@@ -1,0 +1,207 @@
+NAMENODE CONFIGURATION FILE
+HOST1: NN,JT,TT,DN
+CORE-SITE.XML
+________________________________________
+<configuration>
+<property>
+<name>fs.default.name</name>
+<value>hdfs://c1:9000</value>
+</property>
+<property>
+<name>fs.trash.interval</name>
+<value>1440</value>
+</property>
+<property>
+<name>topology.script.file.name</name>
+<value>/usr/local/hadoop/conf/topology.sh</value>
+</property>
+<property>
+<name>topology.script.number.args</name>
+<value>75</value>
+</property>
+</configuration>
+
+HDFS-SITE.XML
+________________________________________
+<configuration>
+<property>
+   <name>dfs.replication</name>
+   <value>2</value>
+ </property>
+ <property>
+   <name>dfs.name.dir</name>
+   <value>/hdfs-store-A/name,/hdfs-store-B/name</value>
+ </property>
+ <property>
+   <name>dfs.data.dir</name>
+   <value>/hdfs-store-A/data</value>
+ </property>
+<property>
+ <name>dfs.hosts.include</name>
+ <value>/usr/local/hadoop/conf/include</value>
+ <final>true</final>
+</property>
+<property>
+ <name>dfs.hosts.exclude</name>
+ <value>/usr/local/hadoop/conf/exclude</value>
+ <final>true</final>
+</property>
+</configuration>
+
+MAPRED-SITE.XML
+________________________________________
+
+<configuration>
+<property>
+<name>mapred.job.tracker</name>
+<value>c1:9001</value>
+</property>
+<property>
+<name>mapred.hosts.include</name>
+<value>/usr/local/hadoop/conf/include</value>
+<final>true</final>
+</property>
+<property>
+<name>mapred.hosts.exclude</name>
+<value>/usr/local/hadoop/conf/exclude</value>
+<final>true</final>
+</property>
+<property>
+<name>mapred.jobtracker.taskScheduler</name>
+<value>org.apache.hadoop.mapred.FairScheduler</value>
+</property>
+<property>
+<name>mapred.fairscheduler.allocation.file</name>
+<value>/usr/local/hadoop/conf/fair-scheduler.xml</value>
+</property>
+</configuration>
+
+FAIR-SCHEDULER.XML
+________________________________________
+
+<allocations>
+<pool name = 'alpide'>
+<minMaps>10</minMaps>
+<minReduces>5</minReduces>
+</pool>
+<pool name = 'k2'>
+<minMaps>10</minMaps>
+<minReduces>5</minReduces>
+</pool>
+<user name = 'hduser'>
+<maxRunningJobs>1</maxRunningJobs>
+</user>
+</allocations>
+
+MASTERS, SLAVES , INCLUDE, EXCLUDE 
+
+________________________________________ ________________________________________ ________________________________________
+SECONDARY NAMENODE CONFIGURATION FILE
+HOST2: SNN,TT,DN
+
+CORE-SITE.XML
+________________________________________
+<configuration>
+<property>
+<name>fs.default.name</name>
+<value>hdfs://c1:9000</value>
+</property>
+<property>
+<name>fs.trash.interval</name>
+<value>1440</value>
+</property>
+</configuration>
+
+HDFS-SITE.XML
+________________________________________
+<property>
+   <name>dfs.replication</name>
+   <value>2</value>
+ </property>
+ <property>
+   <name>dfs.data.dir</name>
+   <value>/hdfs-store-A/data2</value>
+ </property>
+<property>
+   <name>fs.checkpoint.dir</name>
+   <value>/hdfs-store-A/snnfi</value>
+</property>
+<property>
+   <name>fs.checkpoint.edits.dir</name>
+   <value>/hdfs-store-A/snn_edits</value>
+</property>
+<property>
+   <name>fs.checkpoint.period</name>
+   <value>600</value>
+</property>
+<property>
+   <name>dfs.http.address</name>
+   <value>c1:50070</value>
+</property>
+<property>
+   <name>dfs.secondary.http.address</name>
+   <value>c2:50090</value>
+</property>
+</configuration>
+
+MAPRED-SITE.XML
+________________________________________
+<configuration>
+<property>
+<name>mapred.job.tracker</name>
+<value>c1:9001</value>
+</property>
+</configuration>
+
+MASTERS, SLAVES FILES EMPTY 
+
+________________________________________ ________________________________________ ________________________________________
+DATANODE CONFIGURATION 
+HOST3: TT,DN
+
+CORE-SITE.XML
+________________________________________
+<configuration>
+<property>
+<name>fs.default.name</name>
+<value>hdfs://c1:9000</value>
+</property>
+<property>
+<name>fs.trash.interval</name>
+<value>1440</value>
+</property>
+</configuration>
+
+HDFS-SITE.XML
+________________________________________
+<configuration>
+<property>
+   <name>dfs.replication</name>
+   <value>2</value>
+ </property>
+ <property>
+   <name>dfs.data.dir</name>
+   <value>/hdfs-store/data3</value>
+ </property>
+<property>
+   <name>dfs.http.address</name>
+   <value>http://c1:50070</value>
+</property>
+</configuration>
+
+MAPRED-SITE.XML
+________________________________________
+
+<configuration>
+<property>
+<name>mapred.job.tracker</name>
+<value>c1:9001</value>
+</property>
+</configuration>
+
+MASTERS, SLAVES ARE EMPTY
+
+
+
+
+
